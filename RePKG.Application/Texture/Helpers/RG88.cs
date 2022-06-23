@@ -87,18 +87,6 @@ namespace RePKG.Application.Texture.Helpers
             G = source.G;
         }
 
-        public void FromGray8(Gray8 source)
-        {
-            R = source.PackedValue;
-            G = source.PackedValue;
-        }
-
-        public void FromGray16(Gray16 source)
-        {
-            var b = DownScaleFrom16BitTo8Bit(source.PackedValue);
-            R = b;
-            G = b;
-        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void FromRgb24(Rgb24 source)
@@ -159,6 +147,43 @@ namespace RePKG.Application.Texture.Helpers
 
             R = (byte) vector.X;
             G = (byte) vector.Y;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void FromAbgr32(Abgr32 source)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void FromL8(L8 source)
+        {
+            R = source.PackedValue;
+            G = source.PackedValue;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void FromL16(L16 source)
+        {
+            var b = DownScaleFrom16BitTo8Bit(source.PackedValue);
+            R = b;
+            G = b;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void FromLa16(La16 source)
+        {
+            var b = DownScaleFrom16BitTo8Bit(source.PackedValue);
+            R = b;
+            G = b;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void FromLa32(La32 source)
+        {
+            var b = DownScaleFrom16BitTo8Bit(source.L);
+            R = b;
+            G = b;
         }
     }
 }

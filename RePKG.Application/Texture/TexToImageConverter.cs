@@ -6,7 +6,6 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Formats.Gif;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
-using SixLabors.Primitives;
 
 namespace RePKG.Application.Texture
 {
@@ -135,8 +134,8 @@ namespace RePKG.Application.Texture
             {
                 case MipmapFormat.R8:
                     return bytes == null
-                        ? new Image<Gray8>(width, height)
-                        : Image.LoadPixelData<Gray8>(bytes, width, height);
+                        ? new Image<L8>(width, height)
+                        : Image.LoadPixelData<L8>(bytes, width, height);
 
                 case MipmapFormat.RG88:
                     return bytes == null
