@@ -164,25 +164,9 @@ namespace RePKG.WPF.ViewModels
             }
             if (ext.Equals(".tex", StringComparison.OrdinalIgnoreCase))
             {
-                var tex = LoadTex(File.ReadAllBytes(item.SourceFileName), item.SourceFileName);
-
-                if (tex == null || token.IsCancellationRequested)
-                {
-                    return;
-                }
-                try
-                {
-                    var filePath = Path.Combine(folder,
-                        Path.GetFileNameWithoutExtension(item.SourceFileName));
-
-                    ConvertToImageAndSave(tex, filePath, true);
-                    var jsonInfo = _texJsonInfoGenerator.GenerateInfo(tex);
-                    File.WriteAllText($"{filePath}.tex-json", jsonInfo);
-                }
-                catch (Exception e)
-                {
-                    Logger?.Error(e.Message);
-                }
+                ExtractTex(Path.Combine(folder,
+                        Path.GetFileNameWithoutExtension(item.SourceFileName)), 
+                        LoadTex(File.ReadAllBytes(item.SourceFileName), item.SourceFileName), token);
                 return;
             }
             Logger?.Error($"Unrecognized file extension: {ext}");
@@ -262,17 +246,22 @@ namespace RePKG.WPF.ViewModels
             {
                 return;
             }
-
-            var tex = LoadTex(entry.Bytes, entry.FullPath);
-            if (tex == null)
+            ExtractTex(filePathWithoutExtension, LoadTex(entry.Bytes, entry.FullPath), token);
+        }
+        private void ExtractTex(string filePathWithoutExtension, ITex? tex, CancellationToken token)
+        {
+            if (token.IsCancellationRequested || tex == null)
             {
                 return;
             }
             try
             {
                 ConvertToImageAndSave(tex, filePathWithoutExtension, true);
-                var jsonInfo = _texJsonInfoGenerator.GenerateInfo(tex);
-                File.WriteAllText($"{filePathWithoutExtension}.tex-json", jsonInfo);
+                if (FilterJson)
+                {
+                    var jsonInfo = _texJsonInfoGenerator.GenerateInfo(tex);
+                    File.WriteAllText($"{filePathWithoutExtension}.tex-json", jsonInfo);
+                }
             }
             catch (Exception e)
             {
