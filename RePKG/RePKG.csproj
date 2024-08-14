@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <RootNamespace>RePKG</RootNamespace>
-        <OutputType>Exe</OutputType>
-        <TargetFramework>net472</TargetFramework>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net8.0-windows</TargetFramework>
         <Version>0.2.2</Version>
         <Copyright>Copyright © NotScuffed 2020</Copyright>
     </PropertyGroup>
